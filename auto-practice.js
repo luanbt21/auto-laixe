@@ -60,6 +60,101 @@
       ["Những hành vi nào sau đây", "Luôn tuân thủ pháp luật"],
       ["gây ra tai nạn giao thông", "Cả ba ý trên"],
     ],
+
+    // 58 questions. Keys are question prefixes; answers are option prefixes (matched by text, so
+    // shuffled option order is fine). The 5 "bảng đồng hồ" (dashboard symbol) questions share one
+    // text and differ only by their options, so their entries are ordered most-specific first and
+    // the generic "Đang sử dụng" one is last.
+    "Kỹ thuật lái xe": [
+      ["Khi động cơ xe ô tô đã khởi động, bảng đồng h", "Áp suất dầu "],
+      ["Khi động cơ xe ô tô đã khởi động, bảng đồng h", "Sắp hết nhiê"],
+      ["Khi động cơ xe ô tô đã khởi động, bảng đồng h", "Cửa xe đóng "],
+      ["Khi động cơ xe ô tô đã khởi động, bảng đồng h", "Lái xe và ng"],
+      ["Khi động cơ xe ô tô đã khởi động, bảng đồng h", "Đang sử dụng"],
+      ["Để bảo đảm an toàn khi tham gi", "Tăng ga từ từ, giảm ga th"],
+      ["Khi lái xe ô tô điện xuống dốc", "Cả ba ý trên"],
+      ["Khi điều khiển xe mô tô quay đ", "Cả ba ý trên"],
+      ["Khi điều khiển xe tăng số, ngư", "Không được n"],
+      ["Khi nhả phanh đỗ cơ khí điều k", "Dùng lực tay phải b"],
+      ["Điều khiển xe ô tô trong khu v", "Cả hai ý trê"],
+      ["Những thói quen nào dưới đây k", "Chỉ sử dụng "],
+      ["Khi điều khiển xe mô tô tay ga", "Giữ tay ga ở"],
+      ["Các biện pháp tiết kiệm nhiên ", "Cả hai ý trê"],
+      ["Khi điều khiển ô tô xuống dốc ", "Về số thấp, "],
+      [
+        "Khi điều khiển xe sử dụng hộp ",
+        "Vào số một (1) và từ từ cho hai bánh xe trước xuống rãnh",
+      ],
+      ["Khi lái xe ô tô qua đường sắt ", "Đúng."],
+      [
+        "Khi xuống dốc, muốn dừng xe, n",
+        "Có tín hiệu rẽ phải, điều khiển xe sát vào lề đường bên p",
+      ],
+      ["Khi điều khiển xe ô tô tự đổ, ", "Ý 1 và ý 3."],
+      ["Người ngồi trên xe ô tô cần th", "Quan sát phí"],
+      [
+        "Khi điều khiển xe trên đường v",
+        "Quan sát cẩn thận các chướng ngại vật và báo hiệu bằng còi, đèn; g",
+      ],
+      ["Khi điều khiển xe ô tô có hộp số tự động ", "Về số thấp, "],
+      ["Khi điều khiển xe ô tô có hộp số tự động,", "Không sử dụng chân t"],
+      ["Khi điều khiển ô tô lên dốc ca", "Về số thấp t"],
+      ["Khi vào số để khởi hành xe ô t", "Đạp bàn đạp p"],
+      ["Khi điều khiển xe ô tô gặp mưa", "Bật đèn chiếu g"],
+      ["Khi ngồi lái ô tô tư thế chân,", "Điều chỉnh g"],
+      [
+        "Khi điều khiển xe ô tô rẽ trái",
+        "Cách chỗ rẽ một khoảng cách an toàn có tín hiệu rẽ trái;",
+      ],
+      ["Khi lái xe ô tô trên mặt đường", "Giảm tốc độ,"],
+      ["Để tránh đổ, ngã khi điều khiể", "Cả ba ý trên"],
+      ["Khi lùi xe, người lái xe phải ", "Quan sát bên trái,"],
+      ["Khi tầm nhìn bị hạn chế bởi sư", "Giảm tốc độ,"],
+      ["Trên đường đôi muốn vượt xe ké", "Cả ba ý trên"],
+      ["Khi điều khiển xe giảm số, ngư", "Không được n"],
+      [
+        "Khi điều khiển xe ô tô rẽ phải",
+        "Cách chỗ rẽ một khoảng cách an toàn có tín hiệu rẽ phải; g",
+      ],
+      ["Tay ga trên xe mô tô hai bánh ", "Ý 1 và ý 2."],
+      [
+        "Khi điều khiển xe ô tô ra khỏi",
+        "Quan sát phía trước để tìm biển báo chỉ dẫn “lối ra đường cao tốc”, k",
+      ],
+      ["Khi điều khiển ô tô qua đường ", "Quan sát, ướ"],
+      ["Khi điều khiển xe ô tô xuống đ", "Nhả bàn đạp ga, về số t"],
+      [
+        "Khi khởi hành ô tô sử dụng hộp",
+        "Kiểm tra an toàn xung quanh xe ô tô; đ",
+      ],
+      ["Khi đi từ đường nhánh ra đường", "Quan sát, gi"],
+      [
+        "Khi điều khiển xe ô tô tới gần",
+        "Chuyển từ đèn chiếu xa sang đèn chiếu gần; k",
+      ],
+      ["Để đạt được hiệu quả phanh cao", "Giảm hết ga,"],
+      [
+        "Khi quay đầu xe, người lái xe ",
+        "Quan sát biển báo hiệu để biết nơi được phép quay đầu; quan sát kỹ địa hình nơi chọn để quay đầu; lựa chọn quỹ đạo quay đầu xe ",
+      ],
+      ["Khi điều khiển xe ô tô nhập và", "Quan sát, ph"],
+      ["Điều khiển xe ô tô trong trời ", "Giảm tốc độ,"],
+      [
+        "Khi điều khiển xe ô tô trên đư",
+        "Giữ vững tay lái cho xe đi đúng vệt bánh xe đi trước, sử dụng số thấp đi chậm, gà",
+      ],
+      ["Gương chiếu hậu của xe mô tô h", "Để quan sát an toàn phía s"],
+      ["Khi đã đỗ xe ô tô sát lề đường", "Quan sát tìn"],
+      ["Người lái xe được dừng xe, đỗ ", "Xe gặp sự cố"],
+      ["Để giảm tốc độ khi ô tô đi xuố", "Về số thấp p"],
+      ["Khi lái xe ô tô điện qua khu v", "Cả ba ý trên"],
+      ["Khi đèn pha của xe đi ngược ch", "Giảm tốc độ,"],
+      ["Trong các loại nhiên liệu dưới", "Xăng sinh họ"],
+      ["Khi điều khiển xe qua đường sắ", "Cả hai ý trê"],
+      ["Khi động cơ ô tô đã khởi động,", "Vị trí N hoặ"],
+      ["Khi đang lái xe mô tô hoặc ô t", "Giảm tốc độ để d"],
+      ["Khi điều khiển xe ô tô qua đườ", "Cả hai ý trê"],
+    ],
   };
 
   // ---------------------------------------------------------------------------
@@ -105,7 +200,10 @@
   const questionText = () => {
     const text = mainText();
     const start = text.search(/\d+\. Câu hỏi/);
-    return text.slice(Math.max(start, 0)).split("Ask ai")[0];
+    return text
+      .slice(Math.max(start, 0))
+      .split("Ask ai")[0]
+      .replace(/\s+/g, " ");
   };
 
   /** "Câu hỏi : answered/total" → { answered, total }. */
