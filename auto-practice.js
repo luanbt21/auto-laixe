@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      2026-11-18.2
 // @description  Auto-complete "Ôn luyện" practice per topic, repeat N times (Ctrl+Q to start / stop)
-// @author       You
+// @author       luanbt21
 // @match        https://laixebacha.huelms.com/learn/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tampermonkey.net
 // @grant        none
@@ -155,7 +155,97 @@
       ["Khi đang lái xe mô tô hoặc ô t", "Giảm tốc độ để d"],
       ["Khi điều khiển xe ô tô qua đườ", "Cả hai ý trê"],
     ],
+
+    // 37 questions, ordered longest key first. Several questions (dashboard symbols, device
+    // pictures) share the same text and differ only by their options, so an entry may carry a
+    // 3rd element: a snippet that must also appear on screen (an option unique to that question).
+    "Cấu tạo và sửa chữa xe": [
+      [
+        "Khi động cơ ô tô đã khởi động, bảng đồng hồ xuất hiện ký hiệu như hình vẽ dưới đây ",
+        "Hệ thống lái",
+      ],
+      [
+        "Trên xe ô tô có trang bị thiết bị như hình vẽ dưới đây ",
+        "Dùng để kích",
+      ],
+      [
+        "Khi động cơ ô tô đã khởi động, bảng đồng hồ x",
+        "Áp suất lốp ",
+        "Báo hiệu thiếu dầu phanh.",
+      ],
+      ["Khi động cơ ô tô đã khởi động, bảng đồng hồ x", "Nhiệt độ nướ"],
+      [
+        "Trên xe ô tô có trang bị thiết bị như hình vẽ",
+        "Phá cửa kính",
+        "Chữa cháy.",
+      ],
+      ["Khi động cơ ô tô đã khởi động, bảng đồng hồ x", "Cần kiểm tra"],
+      [
+        "Trên xe ô tô có trang bị thiết bị như hình vẽ",
+        "Chữa cháy tr",
+        "Chữa cháy trong các trường h",
+      ],
+      ["Khi động cơ ô tô đã khởi động, bảng đồng hồ x", "Báo hiệu hệ "],
+      ["Niên hạn sử dụng của xe ô tô t", "25 năm."],
+      ["Xe ô tô tham gia giao thông đư", "Cả hai ý trê"],
+      ["Đèn phanh trên xe mô tô có tác", "Cả hai ý trê"],
+      ["Niên hạn sử dụng của xe ô tô c", "20 năm."],
+      ["Bánh xe, lốp lắp cho xe ô tô p", "Cả hai ý trê"],
+      ["Túi khí được trang bị trên xe ", "Ý 2 và ý 3."],
+      ["Mục đích của bảo dưỡng thường ", "Cả hai ý trê"],
+      ["Ắc quy được trang bị trên xe ô", "Để tích trữ "],
+      ["Dây đai an toàn được trang bị ", "Giữ chặt ngư"],
+      [
+        "Trong các nguyên nhân nêu dưới",
+        "Hết nhiên liệu, lõi lọc nhiên liệu bị tắc, lọc khí bị tắc, nhiên liệu lẫn không khí, t",
+      ],
+      ["Kính chắn gió của xe ô tô phải", "Là loại kính a"],
+      ["Công dụng của hệ thống bôi trơ", "Cung cấp một lượng d"],
+      ["Khi khởi động xe ô tô số tự độ", "Phải đạp hết"],
+      ["Hãy nêu công dụng ly hợp (côn)", "Dùng để truyền h"],
+      ["Hãy nêu công dụng hệ thống tru", "Dùng để truy"],
+      ["Nút bấm biểu tượng như hình vẽ", "Báo hiệu xe "],
+      ["Hãy nêu công dụng của động cơ ", "Khi làm việc, n"],
+      ["Xe mô tô và xe ô tô tham gia g", "Bắt buộc."],
+      ["Khi động cơ đã hoạt động, bảng", "Báo hiệu chế"],
+      ["Hãy nêu công dụng hộp số của x", "Truyền và thay đổi mô men t"],
+      ["Hãy nêu công dụng hệ thống lái", "Dùng để thay đổi h"],
+      ["Máy phát điện được trang bị tr", "Để phát điện"],
+      ["Hãy nêu công dụng hệ thống pha", "Dùng để giảm"],
+      ["Phương pháp kiểm tra mức dầu b", "Rút que thăm dầu trên các-te,"],
+      ["Xe ô tô tham gia giao thông tr", "Ý 1 và ý 2."],
+      ["Hệ thống lái trên xe ô tô phải", "Cả hai ý trê"],
+      [
+        "Dây đai an toàn lắp trên xe ô ",
+        "Đủ số lượng, lắp đặt chắc chắn không bị rách, đứt, khóa cài đóng, mở nhẹ nhàng, không tự mở, không bị kẹt; kéo ra thu vào dễ dàng, cơ cấu hãm g",
+      ],
+      ["Ống xả lắp trên xe ô tô phải b", "Cả hai ý trê"],
+      [
+        "Thế nào là động cơ 4 kỳ?",
+        "Là loại động cơ: để hoàn thành một chu trình công tác của động cơ, pít tông thực hiện 4",
+      ],
+    ],
   };
+
+  /**
+   * Compact banks for big topics: "<question hash><answer hash>" pairs (8+8 hex chars).
+   * Question hash = fnv1a(stem + '||' + sorted options joined by '||'); answer hash = fnv1a(correct option text).
+   * Hashing the options too makes same-text (picture) questions unambiguous and shuffle-proof.
+   */
+  const HASH_BANKS = {
+    "Khái niệm và quy tắc giao thông đường bố": [
+      // 180 questions (title typo is the site's)
+      "42498577de1de026 5505753894ac000e 5897148225892443 69622099e39d6ff5 68e4512b2dd4d84f 3e7071bfb9f56caf 792cb92672fba50f 4fcf8a3bee476b83 5b15b7dbcb1cb498 f1517c5d25892443 6ac59f3789b4db6a 34177a6f860e0cba cc1b057f25892443 81c11a54fe4ae402 002ffec876d85bd4 7bafff3ebb8fad6b d24e9b63a864c099 8fde8139c7782f2c 9c8ee489603bfd01 2fd815af25233092 72373d5f763e140f bfcc79f2da1cfae3 fecafee682605a6f 64b6a5bae30e1839 7d3559de7db75362 dc8f423f1383c034 716330d6db4a3e1b 78f0ba2da676cd75 e48284316990dcd0 8254983d0fb5223e 6fc5c309da827bd9 fd5fdc8b8704bc42 8f28ef41f1d76846 219fc8a825892443 8d9962ac91394ba2 332aea30cef4f6e0 7ea99dea25233092 b3a316b707094933 46d827c2bca84d3c 4eb7a081256e5bb6 17b706abf5050798 b5b7247d64081e81 ada0e36725892443 0f53f24d25233092 308e385982605a6f 8a0067de39f5fa4f 281d97bc60a04318 0646cb7925233092 416ac80184132b5d ed8fd0c20b3fd9e2 a4111f5e662963e4 bd48ba2ffebd134d 590ed66b2ed3f2f2 697e6d471bef44cc 3d9513f38b898c60",
+      "5748f945f39d3aa5 ba23797025233092 35827f0f24b03a8f dd43bd25ed9e3b94 88a8c8d0e10179e0 04e3c3ca0386a5cc 3f088007ee968efc 1ecbf53b1ea15aef cf378df625233092 b1c285571663c1ac 902106df19b38beb d0a1a2d26606539a bb31120a1c30c70c 70f57999517ed018 13a2f507b2f5c0d5 b00d7013fc249a31 7c4aadc3e7c2348a 236bb82b25233092 06b36aa025892443 2abbb71b25233092 c43dde2025892443 99189ceac243ead8 de53296825233092 661367b675d40f78 656341b24d584adf e1927f249004da67 5bc2cf9483e2fc1f ce53e59ed11f145b 1d9b59d225892443 52fad4bfd17d2dd8 15b8f0f3e05ad249 edb1982725892443 f5d12afe5f7b88a8 60e0fb22603bfd01 717757f625233092 a669925f6a417e8e 28f059f6731e9910 f1a02f94153e8836 4b1297a933d20dbf a01d051cfa4769bc 66f31a61efbd7793 5de3d29197661e5a 84a1a9c7fe852d15 c7afdc6f6a8a5136 1047d7d2453887e1 232653d34080a751 7003b89fbf826d0e 6567e21cb0e7fbab 18fd5c7a0751d3ca 05bc8b5f1e805fda e56e7bfd0af88fb7 12eab8440c29ba59 473b54df25233092 3abdc49ada1cfae3 6a9c88b17dd095c0",
+      "6ba101e125892443 f05bebcad32e2507 95536e13231402b5 a397126324c1f78e 96056ee75c7eff9d 28b307a28b3f40c9 da7f50dc4c95aa8f 67d1c651cb1cb498 f5be8e95b6322dad 91fc09766a8a5136 d7f98e96fe49ddad caad88115c69b55c 00f081ae25233092 c3e518b225233092 a488cb4f25892443 22a8cda725233092 ab3c825bcaa5642d 793e5f1f25233092 3bdd18e125233092 173c1ac82aafbc4c edfc2fcd603bfd01 f9659e8314a4af8c 9472eafc5854990c 36954c6925233092 bdb2bb2225233092 ef2a62fe4da36031 98bf4914e962250a 01039da7810346ba 688e0fe167e35c8f 7dfae38028ec7160 b86d33b9b48e4469 118ab6fa92b209a7 9ae023ed43485329 62c5e02025892443 79cbec4225892443 17955ef5675f8eff 71cbb32eecf26970 7bf3744126da5a1c 35f2ac7c64081e81 6f8c4b727e43cb5a 58344d48ccf98c9a 8472f0cb9f16125e 85b2b63970833712 eabbace54698033b 4c2e554b727d54c3 d5e60ca96df9edb7 e0b62179ca97a429 63c27c23ccf98c9a 99caf9cea97d4e3d 06cb7b229b3add13 30917faafe4ae402 2e3bce2dfcaedb34 4da945e398ff6dbe 362da59d5fe798b0 b0e47b8c25892443",
+      "94126b5825233092 0d736ab899b12c3f 64b4c2908d363f1b d52cc4ec25892443 a0f71934cb1cb498 04cf8e061663c1ac dd5852ea25233092 ff1c956225892443 9dd320a9bbbce620 495d282da30efbd6 99e268b7e704409a 61d9ebc717bb8b05 621d849d25892443 cc87178ee05ad249 8913f7382de16d2f",
+    ].join(" "),
+  };
+
+  /** Every topic that has a bank of either kind. */
+  const TOPIC_TITLES = [
+    ...new Set([...Object.keys(BANKS), ...Object.keys(HASH_BANKS)]),
+  ];
 
   // ---------------------------------------------------------------------------
   // Helpers
@@ -214,7 +304,7 @@
 
   /** Topic block on the list page: title text must be a key of BANKS and have a start button. */
   const findTopic = () => {
-    for (const title of Object.keys(BANKS)) {
+    for (const title of TOPIC_TITLES) {
       const btn = findButton((t) => t.startsWith(START_PREFIX));
       if (!btn) return null;
       const block = btn.closest(".sand-p-10") ?? btn.parentElement;
@@ -225,12 +315,46 @@
 
   /** Which topic's bank applies to the question on screen. */
   const topicOnPractice = (state) =>
-    state.topic ?? Object.keys(BANKS).find((t) => mainText().includes(t));
+    state.topic ?? TOPIC_TITLES.find((t) => mainText().includes(t));
+
+  /** 32-bit FNV-1a as 8 hex chars (must match the function used to build HASH_BANKS). */
+  const fnv = (s) => {
+    let h = 0x811c9dc5;
+    for (let i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 0x01000193) >>> 0;
+    }
+    return h.toString(16).padStart(8, "0");
+  };
+  const norm = (s) => s.replace(/\s+/g, " ").trim();
+
+  /** Parses a HASH_BANKS string into Map(questionHash → answerHash). */
+  const parseHashBank = (str) =>
+    new Map(str ? str.split(" ").map((p) => [p.slice(0, 8), p.slice(8)]) : []);
+
+  /** Hash of the question on screen: its stem plus its (order-independent) options. */
+  const questionHash = (opts) => {
+    const text = mainText();
+    const block = text
+      .slice(Math.max(text.search(/\d+\. Câu hỏi/), 0))
+      .split("Ask ai")[0];
+    const stem = norm((block.split("Góp ý\n")[1] ?? "").split(/\n1-/)[0]);
+    const texts = opts.map((o) => norm(optionText(o)));
+    return fnv(`${stem}||${[...texts].sort().join("||")}`);
+  };
 
   /** Picks the option index; falls back to a "Cả …" option, then the first. */
-  const pickIndex = (bank, question, opts) => {
-    for (const [q, a] of bank) {
+  const pickIndex = (bank, hashBank, question, opts) => {
+    const answerHash = hashBank.get(questionHash(opts));
+    if (answerHash) {
+      const idx = opts.findIndex(
+        (o) => fnv(norm(optionText(o))) === answerHash,
+      );
+      if (idx >= 0) return idx;
+    }
+    for (const [q, a, ctx] of bank) {
       if (!question.includes(q)) continue;
+      if (ctx && !question.includes(ctx)) continue; // disambiguates same-text questions
       const idx = opts.findIndex((o) => optionText(o).includes(a));
       if (idx >= 0) return idx;
     }
@@ -246,8 +370,10 @@
   /** Answers every remaining question, then clicks finish. Returns true when finished. */
   const doPractice = async (state) => {
     const topic = topicOnPractice(state);
-    const bank = BANKS[topic];
-    if (!bank) return (warn("no bank for topic:", topic), false);
+    const bank = BANKS[topic] ?? [];
+    const hashBank = parseHashBank(HASH_BANKS[topic]);
+    if (!bank.length && !hashBank.size)
+      return (warn("no bank for topic:", topic), false);
 
     const { total } = counter();
     for (let i = 0; i < total + 5; i++) {
@@ -256,7 +382,7 @@
       if (!opts.length) break; // no question on screen
 
       const question = questionText();
-      const idx = pickIndex(bank, question, opts);
+      const idx = pickIndex(bank, hashBank, question, opts);
       (opts[idx].closest("label") ?? opts[idx]).click();
       await sleep(DELAY.feedback);
 
